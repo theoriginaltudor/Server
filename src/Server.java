@@ -1,11 +1,9 @@
 import java.io.*;
 import java.net.*;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Server implements Runnable {
-    private volatile static Set<Person> persons = new HashSet<>();
+    private volatile static List<Person> persons = new ArrayList<>();
     private static ServerSocket welcomeSocket;
     private static Socket connectionSocket;
 
