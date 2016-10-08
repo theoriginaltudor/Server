@@ -41,6 +41,7 @@ public class Server implements Runnable {
                 switch (message.substring(0, 4)) {
                     case "JOIN":
                         for (Person p : persons) {
+                            printList(p.getStream());
                             if (p.getName().equals(message.substring(5))) {
                                 sendMessage("J_ERR Try again", o);
                                 return;
@@ -71,13 +72,11 @@ public class Server implements Runnable {
                         }
                         break;
                     case "LIST":
-                        for (Person p : persons) {
-                            sendMessage(p.getName() + " is online", o);
-                        }
+                        printList(o);
                         break;
                     case "QUIT":
                         for (Person p : persons) {
-                            sendMessage(message, p.getStream());
+                            printList(p.getStream());
                             if (p.getName().equals(message.substring(5))) {
                                 persons.remove(p);
                                 s.close();
@@ -99,6 +98,12 @@ public class Server implements Runnable {
             }
         }
 
+    }
+
+    private static void printList(DataOutputStream o) {
+        for (Person p : persons) {
+            sendMessage(p.getName() + " is online", o);
+        }
     }
 
     private static void sendMessage(String s, DataOutputStream user) {
