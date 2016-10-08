@@ -16,7 +16,7 @@ public class Client {
         try {
             boolean b = true;
             while (b) {
-                Socket clientSocket = new Socket("10.111.180.119", 5555/*"localhost", 5558*/);
+                Socket clientSocket = new Socket(/*"192.168.43.55", 5555*/"localhost", 5558);
                 System.out.println("Choose a nickname: ");
                 Scanner inFromUser = new Scanner(System.in);
                 outToServer = new DataOutputStream(clientSocket.getOutputStream());
