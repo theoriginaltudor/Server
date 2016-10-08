@@ -57,7 +57,7 @@ public class Server implements Runnable {
                     case "ALVE":
                         second = Calendar.getInstance().getTimeInMillis();
                         System.out.println("Second " + second + " first " + first);
-                        if (second - first > 60100) {
+                        if (second - first > 75000) {
                             for (Person p : persons) {
                                 if (p.getName().equals(message.substring(5))) {
                                     persons.remove(p);
