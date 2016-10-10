@@ -9,7 +9,7 @@ public class Server implements Runnable {
 
     public static void main(String argv[]) {
         try {
-            welcomeSocket = new ServerSocket(5558);
+            welcomeSocket = new ServerSocket(5555);
             while (true) {
                 connect();
             }
