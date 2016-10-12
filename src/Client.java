@@ -16,13 +16,13 @@ public class Client {
         try {
             boolean b = true;
             while (b) {
-                Socket clientSocket = new Socket(/*"192.168.43.55", 5555*/"localhost", 5558);
+                Socket clientSocket = new Socket("172.16.31.246", 9000/*"localhost", 5558*/);
                 System.out.println("Choose a nickname: ");
                 Scanner inFromUser = new Scanner(System.in);
                 outToServer = new DataOutputStream(clientSocket.getOutputStream());
                 inFromServer = new DataInputStream(clientSocket.getInputStream());
                 String nickname = inFromUser.nextLine();
-                outToServer.writeUTF("JOIN " + nickname +", 192.168.43.78:7777");
+                outToServer.writeUTF("JOIN " + nickname +", 172.16.31.246:7777");
                 String fromServer = inFromServer.readUTF();
                 if (fromServer.substring(0, 4).equals("J_OK")) {
                     name = nickname;
