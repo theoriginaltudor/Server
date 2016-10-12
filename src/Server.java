@@ -35,13 +35,16 @@ public class Server implements Runnable {
             while (b) {
                 String message = i.readUTF();
                 System.out.println(message);
+                if(message.length()>251)
+                    return;
                 if (message.substring(0, 4).equals("JOIN")) {
                     first = Calendar.getInstance().getTimeInMillis();
                 }
                 switch (message.substring(0, 4)) {
                     case "JOIN":
                         for (Person p : persons) {
-                            if (p.getName().equals(message.substring(5, message.indexOf(",")))) {
+                            if (p.getName().equals(message.substring(5, message.indexOf(",")))
+                                    &&message.substring(5,message.indexOf(",")).length()<12) {
                                 sendMessage("J_ERR Try again", o);
                                 return;
                             }
