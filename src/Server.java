@@ -76,11 +76,11 @@ public class Server implements Runnable {
                         break;
                     case "QUIT":
                         for (Person p : persons) {
-                            printList(p.getStream());
                             if (p.getName().equals(message.substring(5))) {
                                 persons.remove(p);
                                 s.close();
                             }
+                            printList(p.getStream());
                         }
                         b = false;
                         break;
