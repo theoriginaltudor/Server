@@ -41,14 +41,14 @@ public class Server implements Runnable {
                 switch (message.substring(0, 4)) {
                     case "JOIN":
                         for (Person p : persons) {
-                            printList(p.getStream());
-                            if (p.getName().equals(message.substring(5))) {
+                            if (p.getName().equals(message.substring(5, message.indexOf(",")))) {
                                 sendMessage("J_ERR Try again", o);
                                 return;
                             }
                         }
-                        persons.add(new Person(message.substring(5), o));
+                        persons.add(new Person(message.substring(5, message.indexOf(",")), o));
                         sendMessage("J_OK Welcome", o);
+                        printList();
                         break;
                     case "DATA":
                         for (Person p : persons) {
@@ -72,16 +72,17 @@ public class Server implements Runnable {
                         }
                         break;
                     case "LIST":
-                        printList(o);
+                        printList();
                         break;
                     case "QUIT":
-                        for (Person p : persons) {
+                        for (int x = 0; x < persons.size(); x++) {
+                            Person p = persons.get(x);
                             if (p.getName().equals(message.substring(5))) {
                                 persons.remove(p);
-                                s.close();
+                                p.getStream().close();
                             }
-                            printList(p.getStream());
                         }
+                        printList();
                         b = false;
                         break;
                     default:
@@ -93,6 +94,11 @@ public class Server implements Runnable {
             System.out.println("Smth in the receiveMessage");
             try {
                 s.close();
+                for (Person p : persons) {
+                    if (p.getStream().equals(o))
+                        persons.remove(p);
+                }
+                printList();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -100,9 +106,11 @@ public class Server implements Runnable {
 
     }
 
-    private static void printList(DataOutputStream o) {
-        for (Person p : persons) {
-            sendMessage(p.getName() + " is online", o);
+    private static void printList() {
+        for (Person pers : persons) {
+            for (Person p : persons) {
+                sendMessage(p.getName() + " is online", pers.getStream());
+            }
         }
     }
 
@@ -110,6 +118,7 @@ public class Server implements Runnable {
         try {
             user.writeUTF(s);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Message failed to be sent");
         }
     }
