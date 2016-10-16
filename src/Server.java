@@ -111,8 +111,9 @@ public class Server implements Runnable {
 
     private static void printList() {
         for (Person pers : persons) {
+            sendMessage("Users online",pers.getStream());
             for (Person p : persons) {
-                sendMessage(p.getName() + " is online", pers.getStream());
+                sendMessage(p.getName(), pers.getStream());
             }
         }
     }
