@@ -35,8 +35,8 @@ public class Server implements Runnable {
             while (b) {
                 String message = i.readUTF();
                 System.out.println(message);
-                if(message.length()>251)
-                    return;
+                if(message.substring(5).length()>250)
+                    message = "This is not permitted";
                 if (message.substring(0, 4).equals("JOIN")) {
                     first = Calendar.getInstance().getTimeInMillis();
                 }
